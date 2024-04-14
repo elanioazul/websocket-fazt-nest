@@ -36,8 +36,8 @@ export class WebsocketGateway
   @SubscribeMessage('mensaje')
   handleMessage(@ConnectedSocket() client: Socket, @MessageBody() data: any) {
     console.log(data);
-    this.server.emit('mensajefromServer', data);
+    //this.server.emit('mensajefromServer', data);
     // console.log(client.id);
-    // client.broadcast.emit('mensaje', data);
+    client.broadcast.emit('mensajefromServer', data);
   }
 }
