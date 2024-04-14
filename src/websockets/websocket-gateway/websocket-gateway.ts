@@ -1,4 +1,5 @@
 import {
+  ConnectedSocket,
   MessageBody,
   OnGatewayConnection,
   OnGatewayDisconnect,
@@ -27,8 +28,16 @@ export class WebsocketGateway
   @WebSocketServer()
   server: Server;
 
+  // @SubscribeMessage('mensaje')
+  // handleMessage(@MessageBody() data: any) {
+  //   console.log(data);
+  // }
+
   @SubscribeMessage('mensaje')
-  handleMessage(@MessageBody() data: any) {
+  handleMessage(@ConnectedSocket() client: Socket, @MessageBody() data: any) {
     console.log(data);
+    this.server.emit('mensajefromServer', data);
+    // console.log(client.id);
+    // client.broadcast.emit('mensaje', data);
   }
 }
